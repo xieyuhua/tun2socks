@@ -42,7 +42,7 @@ func rawTcpForwarder(conn core.CommTCPConn) error {
 		return nil
 	}
 	defer socksConn.Close()
-	if socks.SocksCmd(socksConn, 1, conn.LocalAddr().String()) == nil {
+	if socks.SocksCmds(socksConn, 1, conn.LocalAddr().String()) == nil {
 		go io.Copy(conn, socksConn)
 		io.Copy(socksConn, conn)
 	}

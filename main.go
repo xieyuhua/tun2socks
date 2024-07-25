@@ -10,7 +10,7 @@ var tunDevice = flag.String("dev", "xieyuhua", "tunDevice name")
 var tunAddr   = flag.String("addr", "192.168.123.2", "tunAddr 192.168.123.2")
 var mask      = flag.String("mask", "255.255.255.0", "mask")
 var tunGW     = flag.String("gate", "192.168.123.1", "gate")
-var socksAddr = flag.String("proxy", "192.168.9.21:1080", "socksAddr")
+var socksAddr = flag.String("proxy", "socks5://xieyuhua:xieyuhua@192.168.9.21:1080", "socksAddr")
 var tunDns    = flag.String("dns", "114.114.114.114:53", "tunDns")
 
 func main() {
