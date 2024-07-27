@@ -53,18 +53,18 @@ func getIpSegRange(userSegIp, offset uint8) (int, int) {
 	return int(segMinIp), int(segMaxIp)
 }
 
-func GetWaterConf(tunAddr string, tunMask string) water.Config {
+func GetWaterConf(tunDevName string,tunAddr string, tunMask string) water.Config {
 	config := water.Config{
 		DeviceType: water.TUN,
 	}
-	config.Name = "tun2"
+	config.Name = tunDevName
 	return config
 }
 
 /*windows linux mac use tun dev*/
 func RegTunDev(tunDevice string, tunAddr string, tunMask string, tunGW string, tunDNS string) (*water.Interface, error) {
 	if len(tunDevice) == 0 {
-		tunDevice = "tun0"
+		tunDevice = "utun6"
 	}
 	if len(tunAddr) == 0 {
 		tunAddr = "10.0.0.2"
@@ -79,7 +79,7 @@ func RegTunDev(tunDevice string, tunAddr string, tunMask string, tunGW string, t
 		tunDNS = "114.114.114.114"
 	}
 
-	config := GetWaterConf(tunAddr, tunMask)
+	config := GetWaterConf(tunDevice ,tunAddr, tunMask)
 	ifce, err := water.New(config)
 	if err != nil {
 		fmt.Println("start tun err:", err)
@@ -97,7 +97,7 @@ func RegTunDev(tunDevice string, tunAddr string, tunMask string, tunGW string, t
 		masks := net.ParseIP(tunMask).To4()
 		maskAddr := net.IPNet{IP: net.ParseIP(tunAddr), Mask: net.IPv4Mask(masks[0], masks[1], masks[2], masks[3])}
 		ipMin, ipMax := GetCidrIpRange(maskAddr.String())
-		CmdHide("ifconfig", "utun2", ipMin, ipMax, "up").Run()
+		CmdHide("ifconfig",  ifce.Name(), ipMin, ipMax, "up").Run()
 	}
 	return ifce, nil
 }
