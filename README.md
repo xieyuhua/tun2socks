@@ -20,6 +20,19 @@ release:
 # use 
 
 ```
+//socks5 auth 
+//这里的0x05表示使用的是SOCKS版本5，0x01表示一个方法的数量，，0x02表示一个通常称为"USERNAME/PASSWORD"，  0x00表示选择的是无需认证的方法。
+socksConn.Write([]byte{0x05, 0x01, 0x00})
+authBack := make([]byte, 2)
+_, err := io.ReadFull(socksConn, authBack)
+if err != nil {
+	log.Println(err)
+	return err
+}
+```
+
+
+```
 网卡A的网关为192.168.5.1，网卡B的网关为192.168.123.1
 
 netsh int ip reset （重置ip设置）
