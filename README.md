@@ -1,13 +1,8 @@
 # tun2socks
 
 需求：网卡A和网卡B是不同的网络，网卡A本地默认网卡，网卡B虚拟网卡（代理到其他网络）
-我们需要访问特定的ip地址使用网卡B，其他正常访问走网卡A
-
-推荐使用 https://github.com/xjasonlyu/tun2socks
-
-> route add 192.168.0.0 mask 255.255.0.0 192.168.123.1 metric 6 -p 
-
-
+我们需要访问特定的ip地址使用网卡B，其他正常访问走网卡A   
+- route add 192.168.0.0 mask 255.255.0.0 192.168.123.1 metric 6 -p    
 ```
 release:
 	GOOS=linux go build -o tun2socks_linux main.go
